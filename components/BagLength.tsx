@@ -16,7 +16,6 @@ function BagLength({ bags }: { bags: Bag[] }) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("First");
     dispatch(setBags(bags));
   }, []);
   return (

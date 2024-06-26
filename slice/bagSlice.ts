@@ -21,7 +21,12 @@ export const bagSlice = createSlice({
       const bags: Bag[] = action.payload;
       console.log(bags);
       bags.map((bag: Bag) => {
-        state.total += bag.price * bag.qty;
+        console.log(bag);
+        console.log(state.total);
+        const eachBagTotal =
+          Number(bag.price) * Number(bag.qty);
+        console.log(eachBagTotal);
+        state.total += eachBagTotal;
       });
     },
     setBag: (state, action: PayloadAction<Bag>) => {
@@ -37,8 +42,10 @@ export const bagSlice = createSlice({
       } else {
         state.bag = [...oldProduct, action.payload];
       }
-      state.total +=
-        action.payload.price * action.payload.qty;
+      const bagTotal =
+        Number(action.payload.price) *
+        Number(action.payload.qty);
+      state.total += bagTotal;
     },
   },
 });

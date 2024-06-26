@@ -2,6 +2,7 @@ import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import { AddProduct } from "./AddProduct";
 import BagImage from "./BagImage";
+import Link from "next/link";
 
 function Header() {
   const handleSearchForm = async (formData: FormData) => {
@@ -30,7 +31,10 @@ function Header() {
             placeholder='Search'
           />
         </form>
-        <div className='relative flex items-center space-x-8'>
+        <Link
+          href='/bag'
+          className='relative flex items-center space-x-8'
+        >
           <AddProduct />
           <Image
             src='/assets/bag.svg'
@@ -40,7 +44,7 @@ function Header() {
             className='w-[35px] h-[35px]'
           />
           <BagImage />
-        </div>
+        </Link>
       </div>
     </header>
   );
