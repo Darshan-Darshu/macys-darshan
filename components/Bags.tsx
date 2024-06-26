@@ -5,6 +5,7 @@ async function Bags() {
   const response = await fetch(
     `${process.env.SERVICE_URL}/bag/darshan`,
     {
+      cache: "no-cache",
       next: { tags: ["bag"] },
     },
   );
