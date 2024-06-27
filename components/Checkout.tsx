@@ -1,6 +1,5 @@
 import SubTotal from "./SubTotal";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 
 function Checkout() {
   return (

@@ -1,5 +1,6 @@
 import Bags from "@/components/Bags";
 import Checkout from "@/components/Checkout";
+import { Suspense } from "react";
 
 export default function Bag() {
   return (
@@ -7,7 +8,10 @@ export default function Bag() {
       <div className='flex-1'>
         <h1 className='text-2xl font-semibold'>Your Bag</h1>
         <div className='border-b border-gray-200 mt-4' />
-        <Bags />
+
+        <Suspense fallback={<h1>Loading..</h1>}>
+          <Bags />
+        </Suspense>
       </div>
       <Checkout />
     </main>

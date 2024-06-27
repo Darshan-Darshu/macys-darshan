@@ -37,3 +37,22 @@ export const createBagAction = async (
   if (response?.status !== 200) return "error";
   revalidateTag("bag");
 };
+
+export const updateBagAction = async (
+  name: string,
+  amount: number,
+  email: string,
+) => {
+  const response = await fetch(
+    `${process.env.SERVICE_URL}/bag/${email}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ name, amount }),
+    },
+  );
+  if (response?.status !== 200) return "error";
+  revalidateTag("bag");
+};

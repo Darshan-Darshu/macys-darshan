@@ -16,11 +16,14 @@ import { CirclePlus } from "lucide-react";
 import { createProductAction } from "@/action/productAction";
 import { useAppDispatch } from "@/store/hooks";
 import { setProduct } from "@/slice/productSlice";
+import { useUser } from "@clerk/nextjs";
 
 export function AddProduct() {
   const [open, setOpen] = useState(false);
+  const { user } = useUser();
   const dispatch = useAppDispatch();
 
+  const email = user?.emailAddresses?.[0]?.emailAddress;
   const handleAddProduct = async (formData: FormData) => {
     const name = formData.get("name")?.toString();
     const price = Number(formData.get("price"));
@@ -41,6 +44,7 @@ export function AddProduct() {
     console.log("laoding");
     dispatch(setProduct(data));
 
+    if (email !== process.env.ADMIN) return;
     await createProductAction(data);
     console.log("starrt");
   };

@@ -3,6 +3,7 @@ export type Product = {
   price: number;
   productType: string;
   productImage: string;
+  _id?: string;
 };
 
 export type Bag = {

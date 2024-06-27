@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Nav from "@/components/Nav";
 import ReduxProvider from "@/components/ReduxProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <ReduxProvider>
-          <Header />
-          <Nav />
-          {children}
+          <ClerkProvider>
+            <Header />
+            <Nav />
+            {children}
+          </ClerkProvider>
         </ReduxProvider>
       </body>
     </html>

@@ -25,11 +25,14 @@ function Bag({ bag }: { bag: BagTyping }) {
           alt={bag.productName}
           className='h-full'
         />
-        <div className='w-[20%] flex-1'>
+        <div className='w-[35%]'>
           <h1>ADIDAS</h1>
           <p>{bag.productName}</p>
         </div>
-        <QtyButton qty={+bag.qty} />
+        <QtyButton
+          qty={+bag.qty}
+          name={bag.productName}
+        />
         <div className='flex flex-col items-end space-y-4'>
           <p>INR {formatPrice}</p>
           <p>Total INR {formatTotalPrice}</p>

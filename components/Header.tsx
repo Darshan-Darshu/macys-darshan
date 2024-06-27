@@ -3,13 +3,19 @@ import Image from "next/image";
 import { AddProduct } from "./AddProduct";
 import BagImage from "./BagImage";
 import Link from "next/link";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 function Header() {
   const handleSearchForm = async (formData: FormData) => {
     "use server";
     const search = formData.get("search")?.toString();
-    console.log(search);
   };
+
   return (
     <header className='sticky top-0 z-50 bg-white '>
       <div className='2xl:max-w-[70vw] mx-auto flex items-center justify-between py-6 px-8 space-x-2'>
@@ -31,20 +37,19 @@ function Header() {
             placeholder='Search'
           />
         </form>
-        <Link
-          href='/bag'
-          className='relative flex items-center space-x-8'
-        >
+        <div className='relative flex items-center space-x-8'>
+          <SignedOut>
+            <SignInButton
+              mode='modal'
+              forceRedirectUrl='/'
+            />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
           <AddProduct />
-          <Image
-            src='/assets/bag.svg'
-            alt='logo'
-            width={80}
-            height={80}
-            className='w-[35px] h-[35px]'
-          />
           <BagImage />
-        </Link>
+        </div>
       </div>
     </header>
   );

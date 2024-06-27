@@ -11,12 +11,17 @@ import { StarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { createBagAction } from "@/action/productAction";
 import { setBag } from "@/slice/bagSlice";
+import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 function ProductList({
   products,
 }: {
   products: Product[];
 }) {
+  const { user } = useUser();
+
+  const email = user?.emailAddresses?.[0]?.emailAddress;
   const virtualProduct = useAppSelector(
     (state) => state.product.product,
   );
@@ -28,7 +33,6 @@ function ProductList({
   }, []);
 
   const handleAddToBag = async (product: Product) => {
-    const user = "Darshan";
     const bag: Bag = {
       productName: product.name,
       price: product.price,
@@ -36,12 +40,14 @@ function ProductList({
       imageUrl: product.productImage,
     };
     dispatch(setBag(bag));
-    await createBagAction(bag, user);
+    if (!email) return;
+    await createBagAction(bag, email);
   };
   return (
     <section className='grid grid-cols-4 gap-12 mt-24 cursor-pointer'>
       {virtualProduct.map((product: Product) => (
-        <div
+        <Link
+          href={`/product/${product._id}`}
           key={product.name}
           className='flex flex-col justify-between'
         >
@@ -74,7 +80,7 @@ function ProductList({
           >
             Add To Bag
           </Button>
-        </div>
+        </Link>
       ))}
     </section>
   );
