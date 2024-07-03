@@ -11,16 +11,24 @@ export default async function ProductPage({
 
   const products = await response.json();
 
-  const formatPrice = products.price.toLocaleString();
+  const options = {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  };
+
+  const formatPrice = Number(products.price).toLocaleString(
+    "en",
+    options,
+  );
   return (
-    <div className='2xl:max-w-[70vw] mx-auto pl-10'>
+    <div className='2xl:max-w-[70vw] mx-auto px-10'>
       <section className='mt-8 flex space-x-8'>
         <img
           src={products.productImage}
           alt={products.name}
-          className='w-full '
+          className='h-[80vh] object-cover '
         />
-        <div className='w-full'>
+        <div className='flex-1'>
           <p className='text-sm'>ADIDAS</p>
           <h1 className='text-2xl font-semibold mt-4 mb-2'>
             {products.name}

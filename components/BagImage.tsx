@@ -16,7 +16,6 @@ async function BagImage() {
       },
     );
     const bagsData = await response.json();
-    console.log(bagsData);
     if (response.status === 200 && bagsData) {
       bags = bagsData.bag;
     }

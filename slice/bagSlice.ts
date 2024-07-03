@@ -7,6 +7,11 @@ interface BagState {
   total: number;
 }
 
+interface QtyState {
+  name: string;
+  amount: number;
+}
+
 const initialState: BagState = {
   bag: [],
   total: 0,
@@ -19,13 +24,9 @@ export const bagSlice = createSlice({
     setBags: (state, action: PayloadAction<Bag[]>) => {
       state.bag = action.payload;
       const bags: Bag[] = action.payload;
-      console.log(bags);
       bags.map((bag: Bag) => {
-        console.log(bag);
-        console.log(state.total);
         const eachBagTotal =
           Number(bag.price) * Number(bag.qty);
-        console.log(eachBagTotal);
         state.total += eachBagTotal;
       });
     },
@@ -47,9 +48,34 @@ export const bagSlice = createSlice({
         Number(action.payload.qty);
       state.total += bagTotal;
     },
+    setBagQty: (state, action: PayloadAction<QtyState>) => {
+      const oldProduct = state.bag;
+      const bagItem = oldProduct.find(
+        (item) => item.productName === action.payload.name,
+      );
+      const oldBag = oldProduct.filter(
+        (item) => item.productName !== action.payload.name,
+      );
+
+      if (!bagItem) {
+        state.bag = [...oldProduct];
+        return;
+      }
+
+      const previousBagtotal =
+        state.total - bagItem.qty * bagItem.price;
+      bagItem.qty += action.payload.amount;
+
+      const total =
+        previousBagtotal + bagItem.qty * bagItem.price;
+
+      state.bag = [...oldBag, bagItem];
+      state.total = total;
+    },
   },
 });
 
-export const { setBags, setBag } = bagSlice.actions;
+export const { setBags, setBag, setBagQty } =
+  bagSlice.actions;
 
 export default bagSlice.reducer;

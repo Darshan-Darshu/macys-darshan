@@ -1,6 +1,8 @@
 "use client";
 
 import { updateBagAction } from "@/action/productAction";
+import { setBagQty } from "@/slice/bagSlice";
+import { useAppDispatch } from "@/store/hooks";
 import { useUser } from "@clerk/nextjs";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
@@ -15,15 +17,18 @@ function QtyButton({
   const { user } = useUser();
 
   const email = user?.emailAddresses?.[0]?.emailAddress;
+  if (!email) return;
+
   const [isPending, startTransition] = useTransition();
   const [optimistic, addOptimistic] = useOptimistic(
     qty,
     (state, amount) => state + Number(amount),
   );
+  const dispatch = useAppDispatch();
 
   const handleQty = async (amount: number) => {
     startTransition(() => addOptimistic(amount));
-    if (!email) return;
+    dispatch(setBagQty({ name, amount }));
     await updateBagAction(name, amount, email);
   };
   return (

@@ -24,6 +24,9 @@ export function AddProduct() {
   const dispatch = useAppDispatch();
 
   const email = user?.emailAddresses?.[0]?.emailAddress;
+
+  if (email === process.env.ADMIN) return;
+
   const handleAddProduct = async (formData: FormData) => {
     const name = formData.get("name")?.toString();
     const price = Number(formData.get("price"));
@@ -40,13 +43,9 @@ export function AddProduct() {
       productImage,
     };
 
-    console.log("starrt");
-    console.log("laoding");
     dispatch(setProduct(data));
 
-    if (email !== process.env.ADMIN) return;
     await createProductAction(data);
-    console.log("starrt");
   };
   return (
     <Dialog

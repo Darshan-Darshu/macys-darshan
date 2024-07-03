@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
 
 function SubTotal() {
   const options = {
@@ -10,6 +11,7 @@ function SubTotal() {
   const bagTotal = useAppSelector(
     (state) => state.bags.total,
   );
+
   const formatPrice = bagTotal.toLocaleString(
     "en",
     options,

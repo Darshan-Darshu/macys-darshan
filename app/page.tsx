@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 export default async function Home() {
   return (
-    <main className='2xl:max-w-[70vw] mx-auto pl-10'>
+    <main className='2xl:max-w-[70vw] mx-auto px-10'>
       <Banner />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Products />
