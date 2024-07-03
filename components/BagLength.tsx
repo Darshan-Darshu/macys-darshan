@@ -1,16 +1,18 @@
 "use client";
 
-import { setBags } from "@/slice/bagSlice";
+import { clearBag, setBags } from "@/slice/bagSlice";
 import {
   useAppDispatch,
   useAppSelector,
 } from "@/store/hooks";
 import { Bag } from "@/typing";
+import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function BagLength({ bags }: { bags: Bag[] }) {
+  const { user } = useUser();
   const virtualBag = useAppSelector(
     (state) => state.bags.bag,
   );
@@ -18,8 +20,13 @@ function BagLength({ bags }: { bags: Bag[] }) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setBags(bags));
-  }, []);
+    if (user) {
+      dispatch(setBags(bags));
+    } else {
+      dispatch(clearBag());
+    }
+  }, [user]);
+
   return (
     <div
       onClick={() => router.push("/bag")}

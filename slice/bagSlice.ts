@@ -72,10 +72,14 @@ export const bagSlice = createSlice({
       state.bag = [...oldBag, bagItem];
       state.total = total;
     },
+    clearBag: (state) => {
+      state.bag = [];
+      state.total = 0;
+    },
   },
 });
 
-export const { setBags, setBag, setBagQty } =
+export const { setBags, setBag, setBagQty, clearBag } =
   bagSlice.actions;
 
 export default bagSlice.reducer;
